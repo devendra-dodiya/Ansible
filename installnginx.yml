@@ -1,0 +1,26 @@
+---
+ - hosts: remote
+   become: yes
+   become_user: root
+   tasks:
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: latest
+      notify: 
+        - Start Nginx
+
+    - name: Copy conf File to Nginx
+      copy:
+         src: /tmp/welcome.html
+         dest: /usr/share/nginx/html/welcome.html
+         owner: nginx
+         group: nginx
+         mode:  777
+
+   handlers:
+        - name: Start Nginx
+          service:
+                name: nginx
+                state: started
+                enabled: yes

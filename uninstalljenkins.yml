@@ -1,0 +1,9 @@
+---
+ - hosts: localhost
+   become: yes
+   become_user: ansible
+   tasks:
+    - name: Uninstall Jenkins
+      yum:
+        name: Jenkins
+        state: removed
