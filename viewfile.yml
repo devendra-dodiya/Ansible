@@ -1,0 +1,21 @@
+---
+ - hosts: remote
+   become: yes
+   become_user: ansible
+   tasks:
+    - name: Check content of /etc/passwd
+      command: cat /etc/passwd
+      register: etcpasswd
+
+    - name: print jenkins status
+      debug:
+        msg: "{{ etcpasswd }}"
+
+    - name: Filter etc entries
+      shell:
+        cat: /etc/passwd | grep ansible
+      register: ansibleuser
+
+    - name: print ansible user 
+      debug:
+        msg: "{{ ansibleuser }}"
